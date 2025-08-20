@@ -6,7 +6,8 @@ import EnterName from '../screens/NewAccount/EnterName.screen';
 import EnterEmail from '../screens/NewAccount/EnterEmail.screen';
 import EnterNumber from '../screens/NewAccount/EnterNumber.screen';
 import OTP from '../screens/NewAccount/OTP.screen';
-import HomeNavigator from './HomeNavigator';
+import MainNavigator from './MainNavigator';
+import BottomTabs from './BottomTab';
 
 const Stack = createNativeStackNavigator();
 const AuthenticationNavigator = (): React.ReactElement => {
@@ -18,7 +19,7 @@ const AuthenticationNavigator = (): React.ReactElement => {
       <Stack.Screen name="Enumber" component={EnterNumber} />
       <Stack.Screen name="Eemail" component={EnterEmail} />
       <Stack.Screen name="otp" component={OTP} />
-      <Stack.Screen name="homeModule" component={HomeNavigator} />
+      <Stack.Screen name="main" component={MainNavigator} />
     </Stack.Navigator>
   );
 }

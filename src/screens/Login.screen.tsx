@@ -54,7 +54,7 @@ const Login: React.FC = () => {
         style={styles.button}
         onPress={() => {
           console.log({ email, password });
-          navigation.navigate("homeModule");
+          navigation.navigate("main");
         }}
       >
         <Ionicons name="arrow-forward" size={24} color={theme.colors.light} />

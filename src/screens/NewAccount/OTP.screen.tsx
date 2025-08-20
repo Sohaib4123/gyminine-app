@@ -82,7 +82,7 @@ export default function OtpScreen() {
         </TouchableOpacity>
 
         {/* Floating Next Button */}
-        <$Button style={styles.nextButton}>
+        <$Button style={styles.nextButton} onPress={() => navigation.navigate("main")}>
           <Ionicons name="arrow-forward" size={28} color="#fff" />
         </$Button>
       </View>
