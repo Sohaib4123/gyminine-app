@@ -1,35 +1,37 @@
 import React, { useState } from "react";
 import {
   View,
-  Text,
   FlatList,
   Image,
   TouchableOpacity,
   Modal,
-  StyleSheet,
   SafeAreaView,
 } from "react-native";
-import { Ionicons } from "@expo/vector-icons";
+import tw from "../utils/tailwind";
 import { classesData } from "../data/classesData";
 import { Header } from "../components/UI/header.component";
+import $Button from "../components/UI/customButton.component";
+import $Text from "../components/UI/customText.component";
 
 export default function ClassesCategory({ navigation }) {
-  const [selectedClass, setSelectedClass] = useState(null);
+  const [selectedClass, setSelectedClass] = useState<any>(null);
 
-  const renderItem = ({ item }) => (
+  const renderItem = ({ item }: any) => (
     <TouchableOpacity
-      style={styles.card}
+      style={tw`flex-1 m-2 bg-white rounded-xl overflow-hidden shadow-md`}
       onPress={() => setSelectedClass(item)}
     >
-      <Image source={ item.image } style={styles.image} />
-      <Text style={styles.title}>{item.title}</Text>
+      <Image source={item.image} style={tw`w-full h-38 rounded-t-xl`} />
+      <$Text style={tw`text-center p-2 text-base font-medium capitalize`}>
+        {item.title}
+      </$Text>
     </TouchableOpacity>
   );
 
   return (
-    <SafeAreaView style={{ flex: 1, backgroundColor: "#fff" }}>
+    <SafeAreaView style={tw`flex-1 bg-white`}>
       {/* Header */}
-      <Header title="Our Classes" onBack={() => navigation.goBack()}/>
+      <Header title="Our Classes" onBack={() => navigation.goBack()} />
 
       {/* Grid List */}
       <FlatList
@@ -37,7 +39,7 @@ export default function ClassesCategory({ navigation }) {
         renderItem={renderItem}
         keyExtractor={(item) => item.id}
         numColumns={2}
-        contentContainerStyle={styles.list}
+        contentContainerStyle={tw`p-3`}
       />
 
       {/* Modal */}
@@ -47,110 +49,31 @@ export default function ClassesCategory({ navigation }) {
         animationType="fade"
         onRequestClose={() => setSelectedClass(null)}
       >
-        <View style={styles.modalOverlay}>
-          <View style={styles.modalBox}>
+        <View style={tw`flex-1 bg-black/50 justify-center items-center`}>
+          <View style={tw`w-11/12 bg-white rounded-2xl p-4 items-center`}>
             <Image
-              source={ selectedClass?.image }
-              style={styles.modalImage}
+              source={selectedClass?.image}
+              style={tw`w-full h-60 rounded-xl`}
             />
-            <Text style={styles.modalTitle}>{selectedClass?.title}</Text>
-            <Text style={styles.modalDesc}>{selectedClass?.description}</Text>
-            <Text style={styles.modalLevel}>
+            <$Text style={tw`text-xl font-bold mt-3 capitalize`}>
+              {selectedClass?.title}
+            </$Text>
+            <$Text style={tw`mt-2 text-sm text-gray-600 text-left`}>
+              {selectedClass?.description}
+            </$Text>
+            <$Text style={tw`self-start mt-2 text-sm font-semibold text-main`}>
               Level: {selectedClass?.level}
-            </Text>
+            </$Text>
 
-            <TouchableOpacity
-              style={styles.closeButton}
+            <$Button
+              style={tw`mt-4 bg-main px-6 py-3 rounded-lg`}
               onPress={() => setSelectedClass(null)}
             >
-              <Text style={{ color: "#fff", fontWeight: "600" }}>Close</Text>
-            </TouchableOpacity>
+              <$Text style={tw`text-white font-semibold`}>Close</$Text>
+            </$Button>
           </View>
         </View>
       </Modal>
     </SafeAreaView>
   );
 }
-
-const styles = StyleSheet.create({
-  header: {
-    flexDirection: "row",
-    alignItems: "center",
-    padding: 16,
-    backgroundColor: "#627060",
-  },
-  headerText: {
-    color: "#fff",
-    fontSize: 20,
-    fontWeight: "700",
-    marginLeft: 12,
-  },
-  list: {
-    padding: 12,
-  },
-  card: {
-    flex: 1,
-    margin: 8,
-    backgroundColor: "#fff",
-    borderRadius: 12,
-    overflow: "hidden",
-    elevation: 2,
-  },
-  image: {
-    width: "100%",
-    height: 150,
-    borderTopLeftRadius: 12,
-    borderTopRightRadius: 12,
-  },
-  title: {
-    textAlign: "center",
-    padding: 8,
-    fontSize: 14,
-    fontWeight: "500",
-    textTransform: "capitalize",
-  },
-  modalOverlay: {
-    flex: 1,
-    backgroundColor: "rgba(0,0,0,0.5)",
-    justifyContent: "center",
-    alignItems: "center",
-  },
-  modalBox: {
-    width: "85%",
-    backgroundColor: "#fff",
-    borderRadius: 16,
-    padding: 16,
-    alignItems: "center",
-  },
-  modalImage: {
-    width: "100%",
-    height: 240,
-    borderRadius: 12,
-  },
-  modalTitle: {
-    fontSize: 20,
-    fontWeight: "700",
-    marginTop: 12,
-    textTransform: "capitalize",
-  },
-  modalDesc: {
-    marginTop: 8,
-    fontSize: 14,
-    textAlign: "left",
-    color: "#555",
-  },
-  modalLevel: {
-    alignSelf: 'flex-start',
-    marginTop: 6,
-    fontSize: 14,
-    fontWeight: "600",
-    color: "#627060",
-  },
-  closeButton: {
-    marginTop: 16,
-    backgroundColor: "#627060",
-    paddingHorizontal: 24,
-    paddingVertical: 10,
-    borderRadius: 8,
-  },
-});

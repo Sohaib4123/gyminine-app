@@ -1,93 +1,62 @@
-// import React from "react";
-// import { FlatList, Image, Text, TouchableOpacity, View } from "react-native";
-
-// type Props = { data: { id: string; title: string; time: string; instructor: string; image: string }[] };
-
-// export default function TodayClassesList({ data }: Props) {
-//   return (
-//     <FlatList
-//       data={data.slice(0, 3)} // only 3 items
-//       keyExtractor={(item) => item.id}
-//       renderItem={({ item }) => (
-//         <View
-//           style={{
-//             flexDirection: "row",
-//             padding: 12,
-//             marginVertical: 6,
-//             borderRadius: 12,
-//             backgroundColor: "#fff",
-//             shadowOpacity: 0.1,
-//             shadowRadius: 4,
-//           }}
-//         >
-//           <Image source={{ uri: item.image }} style={{ width: 60, height: 60, borderRadius: 8 }} />
-//           <View style={{ flex: 1, marginLeft: 10 }}>
-//             <Text style={{ fontWeight: "600" }}>{item.title}</Text>
-//             <Text>{item.time}</Text>
-//             <Text>{item.instructor}</Text>
-//           </View>
-//           <TouchableOpacity
-//             style={{
-//               backgroundColor: "#6b776b",
-//               paddingHorizontal: 16,
-//               paddingVertical: 6,
-//               borderRadius: 8,
-//               alignSelf: "center",
-//             }}
-//           >
-//             <Text style={{ color: "white" }}>Book</Text>
-//           </TouchableOpacity>
-//         </View>
-//       )}
-//     />
-//   );
-// }
-
 import React from "react";
-import { Image, Text, TouchableOpacity, View, ImageSourcePropType} from "react-native";
+import { Image, View } from "react-native";
+import tw from "../../utils/tailwind";
+import $Text from "../UI/customText.component";
+import $Button from "../UI/customButton.component";
+import { NavigationProp, useNavigation } from "@react-navigation/native";
+import { TabParamList } from "../../types/Navigation.type";
 
 type Props = {
-  data: { id: string; title: string; time: string; instructor: string; image: ImageSourcePropType }[];
+  data: {
+    id: string;
+    title: string;
+    time: string;
+    trainer: string;
+    image: any;
+    date: string;
+  }[];
 };
 
 export default function TodayClassesList({ data }: Props) {
+  const navigation = useNavigation<NavigationProp<TabParamList>>();
+
   return (
     <View>
       {data.slice(0, 3).map((item) => (
         <View
           key={item.id}
-          style={{
-            flexDirection: "row",
-            padding: 12,
-            marginVertical: 6,
-            borderRadius: 12,
-            backgroundColor: "#fff",
-            shadowOpacity: 0.1,
-            shadowRadius: 4,
-            shadowOffset: { width: 0, height: 2 },
-            elevation: 2,
-          }}
+          style={tw`flex-row p-3 my-1.5 rounded-xl bg-background shadow`}
         >
           <Image
-            source={ item.image }
-            style={{ width: 60, height: 60, borderRadius: 8 }}
+            source={item.image}
+            style={tw`w-15 h-15 rounded-lg`}
           />
-          <View style={{ flex: 1, marginLeft: 10 }}>
-            <Text style={{ fontWeight: "600" }}>{item.title}</Text>
-            <Text>{item.time}</Text>
-            <Text>{item.instructor}</Text>
+
+          <View style={tw`flex-1 ml-2.5`}>
+            <$Text style={tw`font-semibold`}>{item.title}</$Text>
+            <$Text>{item.time}</$Text>
+            <$Text>{item.trainer}</$Text>
           </View>
-          <TouchableOpacity
-            style={{
-              backgroundColor: "#6b776b",
-              paddingHorizontal: 16,
-              paddingVertical: 6,
-              borderRadius: 8,
-              alignSelf: "center",
-            }}
+
+          <$Button
+            style={tw`bg-main px-4 py-1.5 rounded-lg self-center`}
+            onPress={() =>
+              navigation.navigate("Classes", {
+                screen: "ClassDetails",
+                params: {
+                  id: item.id,
+                  title: item.title,
+                  trainer: item.trainer,
+                  time: item.time,
+                  date: item.date,
+                  image: Image.resolveAssetSource(item.image).uri,
+                  price: "175 qar",
+                },
+              })
+            }
           >
-            <Text style={{ color: "white" }}>Book</Text>
-          </TouchableOpacity>
+            <$Text color="light">Book</$Text>
+          </$Button>
         </View>
       ))}
     </View>

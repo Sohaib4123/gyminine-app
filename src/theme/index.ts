@@ -8,7 +8,7 @@ const theme = {
     error: "#DC2626",
     success: "#16A34A",
     glass: "transparent",
-    gray: "#ccc",
+    light_gray: "#ccc",
   },
   spacing: {
     xs: 4,

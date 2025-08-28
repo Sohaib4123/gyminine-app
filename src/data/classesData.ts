@@ -64,3 +64,63 @@ export const classesData = [
     level: "Beginner",
   },
 ];
+
+
+export const mockClasses= [
+  {
+    id: "1",
+    title: "reformer control",
+    time: "03:00 pm - 03:45 pm",
+    trainer: "Instructor A",
+    image: require('../assets/images/reformerControl.png'),
+    date: "2025-08-25",
+  },
+  {
+    id: "2",
+    title: "reformer dynamic",
+    time: "03:00 pm - 03:45 pm",
+    trainer: "Instructor B",
+    image: require('../assets/images/reformerDynamic.png'),
+    date: "2025-08-24",
+  },
+  {
+    id: "3",
+    title: "fundamental",
+    time: "03:00 pm - 03:45 pm",
+    trainer: "Instructor C",
+    image: require('../assets/images/fundamentalPilates.png'),
+    date: "2025-08-23",
+  },
+  {
+    id: "4",
+    title: "reformer control",
+    time: "03:00 pm - 03:45 pm",
+    trainer: "Instructor A",
+    image: require('../assets/images/reformerControl.png'),
+    date: "2025-08-22",
+  },
+  {
+    id: "5",
+    title: "reformer dynamic",
+    time: "03:00 pm - 03:45 pm",
+    trainer: "Instructor B",
+    image: require('../assets/images/reformerDynamic.png'),
+    date: "2025-08-21",
+  },
+  {
+    id: "6",
+    title: "fundamental",
+    time: "03:00 pm - 03:45 pm",
+    trainer: "Instructor C",
+    image: require('../assets/images/fundamentalPilates.png'),
+    date: "2025-08-23",
+  },
+  {
+    id: "7",
+    title: "reformer control",
+    time: "03:00 pm - 03:45 pm",
+    trainer: "Instructor A",
+    image: require('../assets/images/reformerControl.png'),
+    date: "2025-08-22",
+  },
+];

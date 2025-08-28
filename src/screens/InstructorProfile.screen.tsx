@@ -1,18 +1,13 @@
 import React, { useState, useEffect } from "react";
+import { View, ScrollView, Image, ActivityIndicator } from "react-native";
 import {
-  View,
-  ScrollView,
-  Image,
-  ActivityIndicator,
-} from "react-native";
-import { useNavigation, RouteProp, NavigationProp } from "@react-navigation/native";
+  useNavigation,
+  RouteProp,
+  NavigationProp,
+} from "@react-navigation/native";
 import tw from "../utils/tailwind";
 
 import { Header } from "../components/UI/header.component";
-import SessionTypeSelector from "../components/InstructorBookingComponent/SessionSelector.component";
-import DatePickerInput from "../components/InstructorBookingComponent/DatePicker.component";
-import TimeSelector from "../components/InstructorBookingComponent/TimeSelector.component";
-import $Button from "../components/UI/customButton.component";
 import $Text from "../components/UI/customText.component";
 import { instructors } from "../data/instructorData";
 import { MainNavigatorParamList } from "../types/Navigation.type";
@@ -24,23 +19,32 @@ type Instructor = {
   image: string;
   description: string;
 };
-type InstructorBookRoute = RouteProp<MainNavigatorParamList, "instructorBook">;
-
-const InstructorBookingScreen: React.FC<{ route: InstructorBookRoute }> = ({
-  route,
-}) => {
-  const [sessionType, setSessionType] = useState(3);
-  const [date, setDate] = useState(new Date());
-  const [time, setTime] = useState("9:00 am");
+type InstructorProfileRoute = RouteProp<
+  MainNavigatorParamList,
+  "instructorProf"
+>;
+type Prop = {
+  route: InstructorProfileRoute;
+};
+const InstructorProfile: React.FC<Prop> = ({ route }) => {
   const navigation = useNavigation<NavigationProp<MainNavigatorParamList>>();
   const [instructor, setInstructor] = useState<Instructor>();
-  const { instructorId } = route.params;
+  const { instructorId, instructorName } = route.params;
   const [loading, setLoading] = useState(true);
   const [isExpanded, setIsExpanded] = useState(false);
 
   useEffect(() => {
     try {
-      const data = instructors.find((i) => i.id === instructorId);
+      let data: Instructor = {
+        id: "",
+        name: "",
+        speciality: "",
+        image: "",
+        description: "",
+      };
+      if (instructorId) data = instructors.find((i) => i.id === instructorId);
+      else data = instructors.find((i) => i.name === instructorName);
+
       setInstructor(data || undefined);
       setLoading(false);
     } catch (error) {
@@ -101,36 +105,9 @@ const InstructorBookingScreen: React.FC<{ route: InstructorBookRoute }> = ({
             </$Text>
           </$Text>
         </View>
-
-        {/* Session Selector */}
-        <SessionTypeSelector
-          options={[3, 6, 12, 24]}
-          selected={sessionType}
-          onSelect={setSessionType}
-        />
-
-        {/* Date Picker */}
-        <DatePickerInput date={date} onChange={setDate} />
-
-        {/* Time Selector */}
-        <TimeSelector
-          times={["9:00 am", "11:00 am", "12:00 pm", "2:00 pm", "3:00 pm"]}
-          selected={time}
-          onSelect={setTime}
-        />
-
-        {/* Continue Button */}
-        <$Button
-          style={tw`mt-3 bg-main py-3 rounded-lg items-center mb-6`}
-          onPress={() => navigation.navigate("termsAndCond")}
-        >
-          <$Text size="lg" weight="bold" color="light">
-            Continue
-          </$Text>
-        </$Button>
       </ScrollView>
     </View>
   );
 };
 
-export default InstructorBookingScreen;
+export default InstructorProfile;

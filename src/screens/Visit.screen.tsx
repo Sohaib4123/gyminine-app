@@ -6,7 +6,8 @@ import {
   ImageBackground,
   Dimensions,
 } from "react-native";
-import { useNavigation } from "@react-navigation/native";
+import { useNavigation, NavigationProp } from "@react-navigation/native";
+import { AuthNavigatorParamList } from "../types/Navigation.type";
 import theme from "../theme";
 import $Text from "../components/UI/customText.component";
 import $Button from "../components/UI/customButton.component";
@@ -14,7 +15,7 @@ import $Button from "../components/UI/customButton.component";
 const { width, height } = Dimensions.get("window");
 
 export default function Visit() {
-  const navigation = useNavigation();
+  const navigation = useNavigation<NavigationProp<AuthNavigatorParamList>>();
 
   return (
     <ImageBackground

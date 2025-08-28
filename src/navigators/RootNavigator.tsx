@@ -3,7 +3,6 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import Onboarding from '../screens/Onboarding.screen';
 import AuthenticationNavigator from './AuthenticationNavigator';
 
-
 const Stack = createNativeStackNavigator();
 const RootNavigater = (): React.ReactElement => {
   return (

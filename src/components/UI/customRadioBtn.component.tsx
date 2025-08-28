@@ -1,6 +1,6 @@
-// components/UI/CustomRadioButton.tsx
 import React from "react";
-import { View, TouchableOpacity, StyleSheet, ViewStyle, TextStyle } from "react-native";
+import { View, TouchableOpacity, ViewStyle, TextStyle } from "react-native";
+import tw from "../../utils/tailwind";
 import $Text from "./customText.component";
 
 export interface RadioOption<T> {
@@ -28,59 +28,45 @@ function $RadioButton<T extends string | number>({
   optionTextStyle,
 }: CustomRadioButtonProps<T>) {
   return (
-    <View style={[styles.container, containerStyle]}>
+    <View style={[tw`mt-md`, containerStyle]}>
       {heading && (
-        <$Text style={headingStyle} size="xl" weight="bold">
+        <$Text
+          size="xl"
+          weight="bold"
+          style={[tw`mb-sm`, headingStyle]}
+        >
           {heading}
         </$Text>
       )}
 
-      {options.map((option) => (
-        <TouchableOpacity
-          key={String(option.value)}
-          onPress={() => onSelect(option.value)}
-          style={styles.optionRow}
-        >
-          <View style={[styles.radio, selected === option.value && styles.radioActive]}>
-            {selected === option.value && <View style={styles.radioDot} />}
-          </View>
-          <$Text style={optionTextStyle} size="md" color="gray">
-            {option.label}
-          </$Text>
-        </TouchableOpacity>
-      ))}
+      {options.map((option) => {
+        const isActive = selected === option.value;
+        return (
+          <TouchableOpacity
+            key={String(option.value)}
+            onPress={() => onSelect(option.value)}
+            style={tw`flex-row items-center mb-2`}
+          >
+            {/* Outer Circle */}
+            <View
+              style={[
+                tw`w-5 h-5 rounded-full border border-gray items-center justify-center mr-2`,
+                isActive && tw`border-main`,
+              ]}
+            >
+              {/* Inner Dot if Active */}
+              {isActive && <View style={tw`w-2.5 h-2.5 rounded-full bg-main`} />}
+            </View>
+
+            {/* Label */}
+            <$Text size="md" color="dark" style={optionTextStyle}>
+              {option.label}
+            </$Text>
+          </TouchableOpacity>
+        );
+      })}
     </View>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    marginTop: 16,
-  },
-  optionRow: {
-    flexDirection: "row",
-    alignItems: "center",
-    marginBottom: 8,
-  },
-  radio: {
-    width: 20,
-    height: 20,
-    borderRadius: 10,
-    borderWidth: 1.5,
-    borderColor: "#666",
-    justifyContent: "center",
-    alignItems: "center",
-    marginRight: 10,
-  },
-  radioActive: {
-    borderColor: "#000",
-  },
-  radioDot: {
-    width: 10,
-    height: 10,
-    borderRadius: 5,
-    backgroundColor: "#000",
-  },
-});
 
 export default $RadioButton;

@@ -1,16 +1,13 @@
-import React from "react";
-import { Image, Text, TouchableOpacity, View} from "react-native";
+import React, { JSX } from "react";
+import { Image, Text, TouchableOpacity, View } from "react-native";
 import { Header } from "../components/UI/header.component";
-import { useNavigation } from "@react-navigation/native";
+import { useNavigation, NavigationProp } from "@react-navigation/native";
 import { instructors } from "../data/instructorData";
 import theme from "../theme";
-import { NativeStackNavigationProp } from "@react-navigation/native-stack";
-import { RootStackParamList } from "../types/Navigation.type";
+import { MainNavigatorParamList } from "../types/Navigation.type";
 
-type AllInstructorNav = NativeStackNavigationProp<RootStackParamList, 'instructors'>
-
-const AllInstructor:React.FC = () => {
-  const navigation = useNavigation<AllInstructorNav>();
+const AllInstructor = (): JSX.Element => {
+  const navigation = useNavigation<NavigationProp<MainNavigatorParamList>>();
   return (
     <View style={{ flex: 1, backgroundColor: "#fff" }}>
       <Header title="Our Instructors" onBack={() => navigation.goBack()} />
@@ -62,6 +59,6 @@ const AllInstructor:React.FC = () => {
       </View>
     </View>
   );
-}
+};
 
 export default AllInstructor;

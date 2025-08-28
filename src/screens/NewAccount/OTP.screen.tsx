@@ -1,28 +1,28 @@
+// src/screens/OtpScreen.tsx
 import React, { useState, useRef } from "react";
 import {
   View,
-  Text,
-  TouchableOpacity,
   TextInput,
-  StyleSheet,
+  TouchableOpacity,
   SafeAreaView,
 } from "react-native";
 import { Ionicons, MaterialIcons } from "@expo/vector-icons";
 import { Header } from "../../components/UI/header.component";
-import { useNavigation } from "@react-navigation/native";
+import { useNavigation, NavigationProp } from "@react-navigation/native";
+import { AuthNavigatorParamList } from "../../types/Navigation.type";
 import $Text from "../../components/UI/customText.component";
 import $Button from "../../components/UI/customButton.component";
-import theme from "../../theme";
+import tw from "../../utils/tailwind";
 
 export default function OtpScreen() {
   const [otp, setOtp] = useState(["", "", "", ""]);
   const inputsRef = useRef<TextInput[]>([]);
-  const navigation = useNavigation();
+  const navigation = useNavigation<NavigationProp<AuthNavigatorParamList>>();
+
   const handleChange = (value: string, index: number) => {
     const updated = [...otp];
     updated[index] = value;
     setOtp(updated);
-
     if (value && index < otp.length - 1) {
       inputsRef.current[index + 1]?.focus();
     }
@@ -31,25 +31,23 @@ export default function OtpScreen() {
   const handleKeyPress = (e: any, index: number) => {
     if (e.nativeEvent.key === "Backspace") {
       if (otp[index]) {
-        // Just clear the current field
         const updated = [...otp];
         updated[index] = "";
         setOtp(updated);
       } else if (index > 0) {
-        // Move to previous field
         inputsRef.current[index - 1]?.focus();
       }
     }
   };
 
   return (
-    <SafeAreaView style={styles.container}>
+    <SafeAreaView style={tw`flex-1 bg-background`}>
       {/* Header */}
       <Header title="New Account" onBack={() => navigation.goBack()} />
 
       {/* Instruction */}
-      <View style={styles.instructionContainer}>
-        <$Text weight="bold" style={styles.instruction}>
+      <View style={tw`flex-row items-center mx-5 mt-5 mb-2 gap-2`}>
+        <$Text weight="bold" style={tw`flex-1 text-lg`}>
           Enter the 4-digit code sent to your email & +9661234567
         </$Text>
         <TouchableOpacity onPress={() => navigation.navigate("Enumber")}>
@@ -58,14 +56,14 @@ export default function OtpScreen() {
       </View>
 
       {/* OTP Inputs */}
-      <View style={styles.otpContainer}>
+      <View style={tw`flex-row justify-evenly my-8`}>
         {otp.map((digit, index) => (
           <TextInput
             key={index}
             ref={(ref) => {
               if (ref) inputsRef.current[index] = ref;
             }}
-            style={styles.otpInput}
+            style={tw`w-12 border-b border-gray-400 text-xl text-center py-1`}
             maxLength={1}
             keyboardType="number-pad"
             value={digit}
@@ -75,82 +73,19 @@ export default function OtpScreen() {
         ))}
       </View>
 
-      <View style={styles.bottomRow}>
-        {/* Resend Code */}
-        <TouchableOpacity style={{marginBottom: theme.spacing.md}}>
-          <$Text style={styles.resend}>Resend the Code</$Text>
+      {/* Bottom Row */}
+      <View style={tw`mt-auto px-6 pb-8 flex-row items-center justify-between`}>
+        <TouchableOpacity>
+          <$Text style={tw`font-bold text-base mb-4`}>Resend the Code</$Text>
         </TouchableOpacity>
 
-        {/* Floating Next Button */}
-        <$Button style={styles.nextButton} onPress={() => navigation.navigate("main")}>
+        <$Button
+          style={tw`absolute bottom-8 right-8 bg-main w-16 h-16 rounded-full justify-center items-center shadow-lg`}
+          onPress={() => navigation.navigate("main")}
+        >
           <Ionicons name="arrow-forward" size={28} color="#fff" />
         </$Button>
       </View>
     </SafeAreaView>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: theme.colors.background,
-  },
-  header: {
-    flexDirection: "row",
-    alignItems: "center",
-    backgroundColor: theme.colors.main, // top bar color
-    padding: 16,
-  },
-  headerTitle: {
-    color: theme.colors.light,
-    fontSize: 18,
-    marginLeft: 12,
-  },
-  instructionContainer: {
-    flexDirection: "row",
-    alignItems: "center",
-    margin: 20,
-    gap: 8,
-  },
-  instruction: {
-    fontSize: theme.sizes.lg,
-    flex: 1,
-  },
-  otpContainer: {
-    flexDirection: "row",
-    justifyContent: "space-evenly",
-    marginVertical: 30,
-  },
-  otpInput: {
-    width: 50,
-    borderBottomWidth: 1,
-    borderColor: "#aaa",
-    fontSize: 20,
-    textAlign: "center",
-    paddingVertical: 4,
-  },
-  resend: {
-    fontWeight: "700",
-    fontSize: 16,
-  },
-  nextButton: {
-    position: "absolute",
-    bottom: 30,
-    right: 30,
-    backgroundColor: "#6B7566",
-    width: 64,
-    height: 64,
-    borderRadius: 32,
-    justifyContent: "center",
-    alignItems: "center",
-    elevation: 4,
-  },
-  bottomRow: {
-    marginTop: "auto",
-    paddingHorizontal: 23,
-    paddingBottom: 32,
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "space-between",
-  },
-});

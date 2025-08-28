@@ -1,9 +1,8 @@
-// src/navigation/tabs.tsx
 import HomeScreen from "../screens/Home.screen";
-import { ClassesScreen } from "../screens/Classes.screen";
-import { MembershipsScreen } from "../screens/Membership.screen";
-import { BookingsScreen } from "../screens/Booking.screen";
-import { ProfileScreen } from "../screens/Profile.screen";
+import ClassesNavigator from "./ClassesNavigator";
+import MembershipScreen from "../screens/Membership.screen";
+import BookingsScreen from "../screens/Booking.screen";
+import ProfileScreen from "../screens/Profile.screen";
 
 export const tabs = [
   {
@@ -14,13 +13,13 @@ export const tabs = [
   },
   {
     name: "Classes",
-    component: ClassesScreen,
+    component: ClassesNavigator,
     icon: "fitness",
     label: "Classes",
   },
   {
     name: "Memberships",
-    component: MembershipsScreen,
+    component: MembershipScreen,
     icon: "card",
     label: "Memberships",
   },

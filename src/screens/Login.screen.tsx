@@ -1,16 +1,17 @@
 // src/screens/NewAccountScreen.tsx
-import React, { useState } from "react";
+import React, { JSX, useState } from "react";
 import { View, StyleSheet, TouchableOpacity } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import { Header } from "../components/UI/header.component";
 import { TextField } from "../components/UI/customTextField.component";
-import { useNavigation } from "@react-navigation/native";
+import { useNavigation, NavigationProp } from "@react-navigation/native";
+import { AuthNavigatorParamList } from "../types/Navigation.type";
 import $Button from "../components/UI/customButton.component";
 import $Text from "../components/UI/customText.component";
 import theme from "../theme";
 
-const Login: React.FC = () => {
-  const navigation = useNavigation();
+const Login = (): JSX.Element => {
+  const navigation = useNavigation<NavigationProp<AuthNavigatorParamList>>();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 

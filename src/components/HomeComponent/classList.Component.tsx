@@ -1,7 +1,12 @@
 import React from "react";
-import { FlatList, Image, Text, TouchableOpacity, ImageSourcePropType} from "react-native";
+import { FlatList, Image, ImageSourcePropType } from "react-native";
+import $Text from "../UI/customText.component";
+import $Button from "../UI/customButton.component";
+import tw from "../../utils/tailwind";
 
-type Props = { data: { id: string; title: string; image: ImageSourcePropType }[] };
+type Props = { 
+  data: { id: string; title: string; image: ImageSourcePropType }[] 
+};
 
 export default function ClassList({ data }: Props) {
   return (
@@ -11,13 +16,13 @@ export default function ClassList({ data }: Props) {
       keyExtractor={(item) => item.id}
       showsHorizontalScrollIndicator={false}
       renderItem={({ item }) => (
-        <TouchableOpacity style={{ marginRight: 12, alignItems: "center" }}>
+        <$Button style={tw`mr-3 items-center`} variant="tab">
           <Image
             source={item.image}
-            style={{ width: 125, height: 125, borderRadius: 10 }}
+            style={tw`w-32 h-32 rounded-lg`}
           />
-          <Text style={{ marginTop: 4 }}>{item.title}</Text>
-        </TouchableOpacity>
+          <$Text style={tw`mt-1`} size='md'>{item.title}</$Text>
+        </$Button>
       )}
     />
   );
