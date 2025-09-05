@@ -1,6 +1,6 @@
 // src/screens/TermsAndConditions.tsx
 import React, { JSX, useState } from "react";
-import { View, Dimensions } from "react-native";
+import { View, Dimensions, ScrollView } from "react-native";
 import { useNavigation, NavigationProp } from "@react-navigation/native";
 import { Header } from "../components/UI/header.component";
 import $Button from "../components/UI/customButton.component";
@@ -9,19 +9,18 @@ import $RadioButton from "../components/UI/customRadioBtn.component";
 import { MainNavigatorParamList } from "../types/Navigation.type";
 import tw from "../utils/tailwind";
 
-const { height } = Dimensions.get("screen");
 
 const TermsAndConditions = (): JSX.Element => {
   const navigation = useNavigation<NavigationProp<MainNavigatorParamList>>();
   const [selected, setSelected] = useState<number | null>(null);
 
   return (
-    <View style={tw`flex-1 bg-white`}>
+    <View style={tw`flex-1 bg-background`}>
       <Header title="Terms and Conditions" onBack={() => navigation.goBack()} />
-
-      <View style={tw`px-5`}>
+      
+      <ScrollView style={tw`px-5`}>
         {/* About Section */}
-        <View style={{ marginTop: height * 0.08 }}>
+        <View style={tw`mt-10`}>
           <$Text style={tw`mb-2 leading-6`} size="md" color="dark">
             Our class policies are there to protect each and all our members
             experience within our classes and studio and we truly believe that
@@ -70,7 +69,7 @@ const TermsAndConditions = (): JSX.Element => {
 
         {/* Radio button */}
         <$RadioButton
-          containerStyle={{ marginTop: height * 0.15 }}
+          containerStyle={tw`mt-10`}
           options={[{ label: "I Agree", value: 1 }]}
           selected={selected}
           onSelect={(value) =>
@@ -98,7 +97,8 @@ const TermsAndConditions = (): JSX.Element => {
             </$Text>
           </$Button>
         </View>
-      </View>
+
+      </ScrollView>
     </View>
   );
 };

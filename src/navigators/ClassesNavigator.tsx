@@ -9,7 +9,10 @@ const Stack = createNativeStackNavigator<ClassesNavigatorParamList>();
 const ClassesNavigator = (): React.ReactElement => {
   return (
     <Stack.Navigator
-      screenOptions={{ headerShown: false }}
+      screenOptions={{ 
+        headerShown: false,
+        animation: 'fade',
+      }}
       initialRouteName="ClassesList"
       id={undefined}
     >

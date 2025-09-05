@@ -8,7 +8,7 @@ import {
   SafeAreaView,
 } from "react-native";
 import tw from "../utils/tailwind";
-import { classesData } from "../data/classesData";
+import { allClassesData } from "../data/classesData";
 import { Header } from "../components/UI/header.component";
 import $Button from "../components/UI/customButton.component";
 import $Text from "../components/UI/customText.component";
@@ -29,13 +29,13 @@ export default function ClassesCategory({ navigation }) {
   );
 
   return (
-    <SafeAreaView style={tw`flex-1 bg-white`}>
+    <SafeAreaView style={tw`flex-1 bg-background`}>
       {/* Header */}
       <Header title="Our Classes" onBack={() => navigation.goBack()} />
 
       {/* Grid List */}
       <FlatList
-        data={classesData}
+        data={allClassesData}
         renderItem={renderItem}
         keyExtractor={(item) => item.id}
         numColumns={2}
@@ -58,7 +58,7 @@ export default function ClassesCategory({ navigation }) {
             <$Text style={tw`text-xl font-bold mt-3 capitalize`}>
               {selectedClass?.title}
             </$Text>
-            <$Text style={tw`mt-2 text-sm text-gray-600 text-left`}>
+            <$Text style={tw`mt-2 text-sm text-main text-left`}>
               {selectedClass?.description}
             </$Text>
             <$Text style={tw`self-start mt-2 text-sm font-semibold text-main`}>

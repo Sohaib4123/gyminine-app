@@ -34,23 +34,18 @@ const InstructorProfile: React.FC<Prop> = ({ route }) => {
   const [isExpanded, setIsExpanded] = useState(false);
 
   useEffect(() => {
-    try {
-      let data: Instructor = {
-        id: "",
-        name: "",
-        speciality: "",
-        image: "",
-        description: "",
-      };
-      if (instructorId) data = instructors.find((i) => i.id === instructorId);
-      else data = instructors.find((i) => i.name === instructorName);
+  try {
+    const found = instructorId
+      ? instructors.find((i) => i.id === String(instructorId)) // 👈 force string
+      : instructors.find((i) => i.name === instructorName);
 
-      setInstructor(data || undefined);
-      setLoading(false);
-    } catch (error) {
-      console.log("Error when getting instructor data!!!", error);
-    }
-  }, []);
+    setInstructor(found);
+  } catch (error) {
+    console.log("Error when getting instructor data!!!", error);
+  } finally {
+    setLoading(false);
+  }
+}, [instructorId, instructorName]);
 
   const getTrimmedText = (text: string, maxLength: number) => {
     if (text.length <= maxLength) return text;
@@ -81,7 +76,7 @@ const InstructorProfile: React.FC<Prop> = ({ route }) => {
             source={{
               uri: instructor?.image || "https://via.placeholder.com/300x200",
             }}
-            style={tw`w-full h-50 rounded-xl bg-gray-500`}
+            style={tw`w-full h-50 rounded-xl bg-main`}
           />
           <$Text style={tw`mt-2 text-dark`} size="md">
             {instructor?.speciality}

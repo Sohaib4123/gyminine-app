@@ -1,6 +1,11 @@
 // navigation/types.ts
 import { NavigatorScreenParams } from "@react-navigation/native";
 
+export type RootParamList = {
+  onboard: undefined;
+  auth: undefined;
+}
+
 export type MainNavigatorParamList = {
   mainTab: NavigatorScreenParams<TabParamList>;
   classCategory: undefined;
@@ -27,6 +32,7 @@ export type MainNavigatorParamList = {
   cancelBooking: undefined;
   freezeBooking: undefined;
   languageSetting: undefined;
+  deleteAccount: undefined;
 };
 
 export type AuthNavigatorParamList = {

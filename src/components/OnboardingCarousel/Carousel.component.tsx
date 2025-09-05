@@ -1,65 +1,3 @@
-// import React from 'react';
-// import { View, Text, Image, StyleSheet, Dimensions } from 'react-native';
-// import Carousel, { ICarouselInstance } from 'react-native-reanimated-carousel';
-// import {Slide} from '../types/Slide'
-// const { width } = Dimensions.get('window');
-
-// type Props = {
-//   data: Slide[];
-//   onIndexChange?: (index: number) => void;
-// };
-
-// const VisitorCarousel = React.forwardRef<ICarouselInstance, Props>(
-//   ({ data, onIndexChange }, ref) => {
-//     return (
-//       <Carousel
-//         ref={ref}
-//         loop={false}
-//         width={width}
-//         height={380}
-//         data={data}
-//         pagingEnabled
-//         onSnapToItem={onIndexChange}
-//         renderItem={({ item }) => (
-//           <View style={styles.slide}>
-//             <Image source={item.image} style={styles.image} resizeMode="cover" />
-//             <Text style={styles.heading}>{item.heading}</Text>
-//             <Text style={styles.text}>{item.text}</Text>
-//           </View>
-//         )}
-//       />
-//     );
-//   }
-// );
-
-// const styles = StyleSheet.create({
-//   slide: {
-//     alignItems: 'center',
-//     paddingHorizontal: 24,
-//     paddingTop: 8,
-//   },
-//   image: {
-//     width: '100%',
-//     height: 200,
-//     borderRadius: 12,
-//     marginBottom: 20,
-//   },
-//   heading: {
-//     fontSize: 18,
-//     fontWeight: 'bold',
-//     textAlign: 'center',
-//     marginBottom: 8,
-//   },
-//   text: {
-//     fontSize: 13,
-//     textAlign: 'center',
-//     color: '#333',
-//     lineHeight: 20,
-//   },
-// });
-
-// export default VisitorCarousel;
-
 import React from "react";
 import {
   View,
@@ -67,7 +5,6 @@ import {
   Image,
   StyleSheet,
   Dimensions,
-  ActivityIndicator,
 } from "react-native";
 import Animated, {
   useSharedValue,

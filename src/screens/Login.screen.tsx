@@ -1,6 +1,6 @@
 // src/screens/NewAccountScreen.tsx
-import React, { JSX, useState } from "react";
-import { View, StyleSheet, TouchableOpacity } from "react-native";
+import React, { JSX, useState, useCallback } from "react";
+import { View, TouchableOpacity } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import { Header } from "../components/UI/header.component";
 import { TextField } from "../components/UI/customTextField.component";
@@ -8,85 +8,69 @@ import { useNavigation, NavigationProp } from "@react-navigation/native";
 import { AuthNavigatorParamList } from "../types/Navigation.type";
 import $Button from "../components/UI/customButton.component";
 import $Text from "../components/UI/customText.component";
-import theme from "../theme";
+import tw from "../utils/tailwind";
 
 const Login = (): JSX.Element => {
   const navigation = useNavigation<NavigationProp<AuthNavigatorParamList>>();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
+  const handleGoBack = useCallback(() => {
+    navigation.goBack();
+  }, [navigation]);
+
+  const handleLogin = useCallback(() => {
+    console.log({ email, password });
+    navigation.navigate("main");
+  }, [email, password, navigation]);
+
   return (
-    <View style={styles.container}>
-      <Header title="Login" onBack={() => navigation.goBack()} />
-      {/* Header Text */}
-      <View style={styles.headerView}>
-        <$Text size="lg" weight="bold" style={styles.headerText}>
+    <View style={tw`flex-1 bg-background`}>
+      {/* Header */}
+      <Header title="Login" onBack={handleGoBack} />
+
+      {/* Header Text + Inputs */}
+      <View style={tw`px-4 mt-5`}>
+        <$Text size="lg" weight="bold" style={tw`mb-3`}>
           Enter your email and password
         </$Text>
-        <View style={{flexDirection: 'row', marginBottom: theme.spacing.md}}>
+
+        <View style={tw`flex-row mb-4`}>
           <TextField
+            inputStyle={tw`text-dark`}
             placeholder="email"
             value={email}
             onChangeText={setEmail}
           />
-          
         </View>
-        <View style={{flexDirection: 'row'}}>
+
+        <View style={tw`flex-row`}>
           <TextField
+            inputStyle={tw`text-dark`}
             placeholder="password"
+            secureTextEntry
             value={password}
             onChangeText={setPassword}
           />
         </View>
       </View>
-      <TouchableOpacity
-        style={{
-          flexDirection: "row",
-          marginTop: theme.spacing.xxl,
-          paddingHorizontal: theme.sizes.md
-        }}
-      >
+
+      {/* Forgot Password */}
+      <TouchableOpacity style={tw`flex-row mt-12 px-4`}>
         <$Text weight="regular" size="lg">
           Forgot Password?
         </$Text>
       </TouchableOpacity>
-      {/* Floating button */}
+
+      {/* Floating Button */}
       <$Button
-        style={styles.button}
-        onPress={() => {
-          console.log({ email, password });
-          navigation.navigate("main");
-        }}
+        style={tw`absolute bottom-8 right-8 bg-main w-16 h-16 rounded-full items-center justify-center shadow-lg`}
+        onPress={handleLogin}
       >
-        <Ionicons name="arrow-forward" size={24} color={theme.colors.light} />
+        <Ionicons name="arrow-forward" size={24} color="#fff" />
       </$Button>
     </View>
   );
 };
 
-const styles = StyleSheet.create({
-  button: {
-    position: "absolute",
-    bottom: 32,
-    right: 32,
-    backgroundColor: theme.colors.main,
-    width: 64,
-    height: 64,
-    borderRadius: 32,
-    alignItems: "center",
-    justifyContent: "center",
-    elevation: 4,
-  },
-  container: {
-    flex: 1,
-    backgroundColor: theme.colors.background,
-  },
-  headerView: {
-    paddingHorizontal: 16,
-    marginTop: 20
-  },
-  headerText: {
-    marginBottom: 12,
-  },
-});
 export default Login;

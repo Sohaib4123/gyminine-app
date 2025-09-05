@@ -8,6 +8,7 @@ import { Header } from "../components/UI/header.component";
 import $Text from "../components/UI/customText.component";
 import $Button from "../components/UI/customButton.component";
 import { Booking, Status } from "../types/Booking.type";
+import QRCode from "react-native-qrcode-svg";
 
 
 const STATUS_COLOR: Record<Booking["status"], string> = {
@@ -126,7 +127,7 @@ export default function BookingConfirmScreen({ navigation, route }: Prop) {
 
       {/* Card */}
       <View style={tw`flex-1 justify-start items-center mt-4`}>
-        <View style={tw`w-11/12 rounded-md bg-white p-6 shadow-lg h-3/5`}>
+        <View style={tw`w-11/12 rounded-md bg-white p-6 shadow-lg h-3/4`}>
           <$Text size="xl" weight="bold" style={tw`text-dark`}>
             {booking.className}
           </$Text>
@@ -156,7 +157,10 @@ export default function BookingConfirmScreen({ navigation, route }: Prop) {
 
           {/* QR Code Placeholder */}
           <View style={tw`mt-6 items-center`}>
-            <$Text>QR Code</$Text>
+            <QRCode
+              value={booking.qrValue}
+              size={200}
+            />
           </View>
         </View>
       </View>

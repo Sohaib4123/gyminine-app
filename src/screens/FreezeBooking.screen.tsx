@@ -3,9 +3,7 @@ import {
   View,
   ScrollView,
   TextInput,
-  TouchableOpacity,
   KeyboardAvoidingView,
-  Platform,
 } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import tw from "../utils/tailwind";
@@ -24,7 +22,7 @@ export default function FreezeBooking() {
 
   return (
     <KeyboardAvoidingView
-      style={tw`flex-1 bg-white`}
+      style={tw`flex-1 bg-background`}
       behavior={"padding"}
       keyboardVerticalOffset={50}
     >

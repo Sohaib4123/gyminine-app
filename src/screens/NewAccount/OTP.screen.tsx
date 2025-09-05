@@ -63,7 +63,7 @@ export default function OtpScreen() {
             ref={(ref) => {
               if (ref) inputsRef.current[index] = ref;
             }}
-            style={tw`w-12 border-b border-gray-400 text-xl text-center py-1`}
+            style={tw`w-12 border-b border-muted text-xl text-center py-1`}
             maxLength={1}
             keyboardType="number-pad"
             value={digit}

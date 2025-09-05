@@ -1,4 +1,4 @@
-export const classesData = [
+export const allClassesData = [
   {
     id: "1",
     title: "barre reformer",

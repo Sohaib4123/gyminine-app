@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { useRef, useState, useCallback, useMemo } from "react";
 import {
   View,
   StyleSheet,
@@ -9,24 +9,24 @@ import {
   SafeAreaView,
 } from "react-native";
 import Ionicons from "@expo/vector-icons/Ionicons";
-import { useNavigation } from "@react-navigation/native";
+import { useNavigation, NavigationProp } from "@react-navigation/native";
 import { useSharedValue } from "react-native-reanimated";
-
 import VisitorCarousel from "../components/OnboardingCarousel/Carousel.component";
 import Pagination from "../components/OnboardingCarousel/Pagination.component";
 import { carouselData } from "../data/carouselData";
 import theme from "../theme";
 import $Text from "../components/UI/customText.component";
+import { RootParamList } from "../types/Navigation.type";
 
 const { height } = Dimensions.get("window");
 
 export default function Onboarding() {
-  const navigation = useNavigation();
+  const navigation = useNavigation<NavigationProp<RootParamList>>();
   const carouselRef = useRef<any>(null);
   const progress = useSharedValue(0);
   const [currentIndex, setCurrentIndex] = useState(0);
 
-  const handleNext = () => {
+   const handleNext = useCallback(() => {
     if (currentIndex < carouselData.length - 1) {
       carouselRef.current?.scrollToIndex({
         index: currentIndex + 1,
@@ -35,11 +35,28 @@ export default function Onboarding() {
     } else {
       navigation.navigate("auth");
     }
-  };
+  }, [currentIndex, navigation]);
 
-  const handlePaginationPress = (index: number) => {
+  const handleSkip = useCallback(() => {
+    navigation.navigate("auth");
+  }, [navigation]);
+
+   const handlePaginationPress = useCallback((index: number) => {
     carouselRef.current?.scrollToIndex({ index, animated: true });
-  };
+  }, []);
+
+  const handleIndexChange = useCallback((index: number) => {
+    progress.value = index;
+    setCurrentIndex(index);
+  }, [progress]);
+
+  const isLastSlide = currentIndex === carouselData.length - 1;
+  const actionButtonStyle = useMemo(() => [
+    styles.actionButton,
+    isLastSlide && styles.actionButtonActive,
+  ], [isLastSlide]);
+
+  const iconColor = isLastSlide ? "white" : theme.colors.main;
 
   return (
     <ImageBackground
@@ -59,14 +76,11 @@ export default function Onboarding() {
           <VisitorCarousel
             ref={carouselRef}
             data={carouselData}
-            onIndexChange={(index) => {
-              progress.value = index;
-              setCurrentIndex(index);
-            }}
+            onIndexChange={handleIndexChange}
           />
 
           <View style={styles.bottomRow}>
-            <TouchableOpacity onPress={() => navigation.navigate("auth")}>
+             <TouchableOpacity onPress={handleSkip}>
               <$Text weight="bold" size="md">
                 SKIP
               </$Text>
@@ -83,20 +97,12 @@ export default function Onboarding() {
 
             <TouchableOpacity
               onPress={handleNext}
-              style={[
-                styles.actionButton,
-                currentIndex === carouselData.length - 1 &&
-                  styles.actionButtonActive,
-              ]}
+              style={actionButtonStyle}
             >
               <Ionicons
                 name="chevron-forward"
                 size={20}
-                color={
-                  currentIndex === carouselData.length - 1
-                    ? "white"
-                    : theme.colors.main
-                }
+                color={iconColor}
               />
             </TouchableOpacity>
           </View>

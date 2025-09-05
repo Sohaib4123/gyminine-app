@@ -8,22 +8,52 @@ type Props = {
   data: { id: string; title: string; image: ImageSourcePropType }[] 
 };
 
-export default function ClassList({ data }: Props) {
+const ClassList = React.memo(({ data }: Props) => {
+  // Memoized render item function
+  const renderClassItem = React.useCallback(({ item }: { item: { id: string; title: string; image: ImageSourcePropType } }) => (
+    <$Button style={tw`mr-3 items-center`} variant="tab">
+      <Image
+        source={item.image}
+        style={tw`w-32 h-32 rounded-lg`}
+        resizeMode="cover"
+        // Performance optimizations
+        fadeDuration={0}
+        progressiveRenderingEnabled={true}
+      />
+      <$Text style={tw`mt-1`} size='md'>{item.title}</$Text>
+    </$Button>
+  ), []);
+
+  // Memoized key extractor
+  const keyExtractor = React.useCallback((item: { id: string; title: string; image: ImageSourcePropType }) => item.id, []);
+
+  // Performance-optimized getItemLayout
+  const getItemLayout = React.useCallback((data: any, index: number) => ({
+    length: 128 + 12, // width + margin
+    offset: (128 + 12) * index,
+    index,
+  }), []);
   return (
     <FlatList
       data={data}
       horizontal
-      keyExtractor={(item) => item.id}
+      keyExtractor={keyExtractor}
+      renderItem={renderClassItem}
+      getItemLayout={getItemLayout}
       showsHorizontalScrollIndicator={false}
-      renderItem={({ item }) => (
-        <$Button style={tw`mr-3 items-center`} variant="tab">
-          <Image
-            source={item.image}
-            style={tw`w-32 h-32 rounded-lg`}
-          />
-          <$Text style={tw`mt-1`} size='md'>{item.title}</$Text>
-        </$Button>
-      )}
+      // Performance optimizations
+      removeClippedSubviews={true}
+      maxToRenderPerBatch={5}
+      windowSize={10}
+      initialNumToRender={3}
+      updateCellsBatchingPeriod={50}
+      // Enable faster scroll
+      disableIntervalMomentum={true}
+      scrollEventThrottle={16}
     />
   );
-}
+})
+
+ClassList.displayName = 'ClassList';
+
+export default ClassList;

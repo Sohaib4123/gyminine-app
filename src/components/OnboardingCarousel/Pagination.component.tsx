@@ -33,17 +33,17 @@ const Pagination: React.FC<PaginationProps> = ({
 
           const width = withTiming(
             isActive ? activeDotStyle?.width || 24 : dotStyle?.width || 10,
-            { duration: 250, easing: Easing.inOut(Easing.quad) }
+            { duration: 150, easing: Easing.inOut(Easing.quad) }
           );
 
           const height = withTiming(
             isActive ? activeDotStyle?.height || 10 : dotStyle?.height || 10,
-            { duration: 250, easing: Easing.inOut(Easing.quad) }
+            { duration: 150, easing: Easing.inOut(Easing.quad) }
           );
 
           const borderRadius = withTiming(
             isActive ? activeDotStyle?.borderRadius || 6 : dotStyle?.borderRadius || 5,
-            { duration: 250, easing: Easing.inOut(Easing.ease) }
+            { duration: 150, easing: Easing.inOut(Easing.ease) }
           );
 
           const backgroundColor = isActive

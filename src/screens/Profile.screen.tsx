@@ -29,7 +29,7 @@ export default function ProfileScreen() {
       label: "delete account",
       icon: "person-remove-outline",
       color: "red",
-      action: () => {}
+      action: () => navigation.getParent<NavigationProp<MainNavigatorParamList>>().navigate('deleteAccount')
     },
     { id: 4, label: "sign out", icon: "log-out-outline", color: "black", action: () => {} },
   ];
@@ -51,19 +51,19 @@ export default function ProfileScreen() {
             <$Text size="xl" weight="bold" style={tw`mt-4`}>
               UserName
             </$Text>
-            <$Text size="sm" style={tw`text-gray-500 mt-1`}>
+            <$Text size="sm" style={tw`text-muted mt-1`}>
               Email: username@gmail.com
             </$Text>
           </View>
 
           {/* Divider */}
-          <View style={tw`h-px bg-gray-200 mt-8`} />
+          <View style={tw`h-px bg-light_gray mt-8`} />
 
           {/* Menu Items */}
           {menuItems.map((item, idx) => (
             <$Button
               key={item.id}
-              style={tw`flex-row items-center justify-between py-4 border-b border-gray-200 bg-glass`}
+              style={tw`flex-row items-center justify-between py-4 border-b border-light_gray bg-glass`}
               onPress={item.action}
             >
               <View style={tw`flex-row items-center`}>

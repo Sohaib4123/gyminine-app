@@ -10,7 +10,7 @@ import MainNavigator from './MainNavigator';
 const Stack = createNativeStackNavigator<AuthNavigatorParamList>();
 const AuthenticationNavigator = (): React.ReactElement => {
   return (
-    <Stack.Navigator screenOptions={{headerShown:false}} initialRouteName='visit' id={undefined}>
+    <Stack.Navigator screenOptions={{headerShown:false, animation:"fade"}} initialRouteName='visit' id={undefined}>
       <Stack.Screen name="Ename" component={EnterName} />
       <Stack.Screen name="Enumber" component={EnterNumber} />
       <Stack.Screen name="Eemail" component={EnterEmail} />

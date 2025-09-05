@@ -1,5 +1,5 @@
 import React, { JSX } from "react";
-import { Image, Text, TouchableOpacity, View } from "react-native";
+import { Image, Text, TouchableOpacity, View, ScrollView } from "react-native";
 import { Header } from "../components/UI/header.component";
 import { useNavigation, NavigationProp } from "@react-navigation/native";
 import { instructors } from "../data/instructorData";
@@ -11,7 +11,7 @@ const AllInstructor = (): JSX.Element => {
   return (
     <View style={{ flex: 1, backgroundColor: "#fff" }}>
       <Header title="Our Instructors" onBack={() => navigation.goBack()} />
-      <View style={{ paddingHorizontal: 20 }}>
+      <ScrollView style={{ paddingHorizontal: 20 }}>
         {instructors.map((item) => (
           <View
             key={item.id}
@@ -56,7 +56,7 @@ const AllInstructor = (): JSX.Element => {
             </TouchableOpacity>
           </View>
         ))}
-      </View>
+      </ScrollView>
     </View>
   );
 };

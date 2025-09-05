@@ -75,10 +75,10 @@ export default function ClassDetailsScreen({ route }: Props) {
 
         <View style={tw`flex-row items-center py-2 border-b border-gray-300`}>
           <Ionicons name="calendar-outline" size={18} color="#333" />
-          <$Text style={tw`ml-2 text-sm text-gray-700 flex-1`}>
+          <$Text style={tw`ml-2 text-sm text-dark flex-1`}>
             class date
           </$Text>
-          <$Text style={tw`text-sm font-medium text-gray-900`}>{date}</$Text>
+          <$Text style={tw`text-sm font-medium text-dark`}>{date}</$Text>
         </View>
 
         <View style={tw`flex-row items-center py-2 border-b border-light_gray`}>
